@@ -36,3 +36,65 @@
     transform: rotate(360deg);
   }
 }
+
+.card {
+  border-radius: 12px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+.badge {
+  font-size: 14px;
+  padding: 10px;
+}
+
+.list-group-item {
+  background-color: #f8f9fa;
+}
+
+.profile-img {
+  width: 120px;  /* Small Size */
+  height: 120px; /* Keep it square */
+  border-radius: 50%; /* Make image circular */
+  object-fit: cover; /* Ensure the image fills the area without distortion */
+  border: 3px solid #007bff; /* Optional: Add a border */
+}
+
+.icon-link {
+  font-size: 28px; /* Adjust icon size */
+  margin: 0 15px; /* Add spacing */
+  transition: transform 0.2s ease-in-out;
+  display: inline-block;
+}
+
+.icon-link:hover {
+  transform: scale(1.2); /* Slight zoom on hover */
+}
+
+.center-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full height */
+}
+
+.projects-container {
+  width: 80%; /* Adjust width for responsiveness */
+  max-width: 800px; /* Set max width */
+  text-align: center;
+}
+
+.card-project {
+  border-radius: 10px; /* Rounded edges */
+}
+
+.list-group-item {
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 5px;
+}
+
+
+
