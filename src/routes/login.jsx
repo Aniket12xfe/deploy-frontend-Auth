@@ -1,25 +1,26 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../endpoints/api";
+import { useAuth } from "../contexts/useAuth";
 
 const Login = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const navigate = useNavigate(); // Redirect after successful login
+    const { get_user } = useAuth();
 
     const handleLogin = async (e) => {
         e.preventDefault(); // Prevent page refresh
 
         try {
-            const response = await login(username, password);
+            const response = await get_user(username, password);
 
             if (!response || response.error) {
                 setError("Invalid username or password"); // Set error message
             } else {
                 setError(""); // Clear any previous error
-                navigate("/dashboard"); // Redirect to dashboard or home page
+                navigate("/"); // Redirect to dashboard or home page
             }
         } catch (err) {
             setError("Something went wrong. Please try again.");

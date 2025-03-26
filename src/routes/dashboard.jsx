@@ -1,6 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { get_notes } from "../endpoints/api";
+import { get_notes, logout } from "../endpoints/api";
+import { useNavigate } from "react-router-dom";
 
 
 const projects = [
@@ -41,6 +42,16 @@ const projects = [
 
 const AboutMeDashboard = () => {
   const [Notes, setNotes] = useState([]);
+  const navigate = useNavigate();
+
+  const logoutHandle = async () => {
+    const response = await logout();
+    if (response) {
+      navigate("/login");
+    } else {
+      console.log("Logout failed");
+    }
+  };
 
   useEffect(() => {
     const fetchNotes = async () => {
@@ -52,13 +63,19 @@ const AboutMeDashboard = () => {
   }, []);
   return (
     <div className="container mt-5">
+      <button className="btn btn-danger" onClick={logoutHandle}>Logout</button>
       <h1 className="text-center mb-4">
-        {Notes.map((note) => (
-          <div className="note">
-            <p>{note.description}</p>
-          </div>
-        ))}
+        {Notes.length > 0 ? (
+          Notes.map((note, index) => (
+            <div key={index} className="note">
+              <p>{note.description}</p>
+            </div>
+          ))
+        ) : (
+          ""
+        )}
       </h1>
+
       <div className="row justify-content-center">
         {/* Profile Card */}
         <div className="col-md-4">
