@@ -1,6 +1,11 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8000/api/';
+const isDevelopment = import.meta.env.MODE === 'development';
+const BASE_URL = isDevelopment ? import.meta.env.VITE_API_BASE_URL_LOCAL : import.meta.env.VITE_API_BASE_URL_DEPLOY;
+
+console.log("Using API Base URL:", BASE_URL);
+
+
 const LOGIN_URL = `${BASE_URL}token/`;
 const REFRESH_URL = `${BASE_URL}token/refresh/`;
 const NOTES_URL = `${BASE_URL}note/`;
@@ -64,7 +69,7 @@ export const logout = async () => {
 
 export const is_authenticated = async () => {
     try {
-        const response = await axios.post(AUTH_URL, {}, {
+        await axios.post(AUTH_URL, {}, {
             withCredentials: true
         });
         return true;
