@@ -1,13 +1,14 @@
 import { useEffect, useState, useContext, createContext } from "react";
 import { is_authenticated, login, register } from "../endpoints/api";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({children}) => {
-    const [authenticated, setAuthenticated] = useState(false); 
+export const AuthProvider = ({ children }) => {
+    const [authenticated, setAuthenticated] = useState(false);
     const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
+    const location = useLocation(); // ✅ Use react-router location
 
     const get_authenticated = async () => {
         try {
@@ -26,31 +27,31 @@ export const AuthProvider = ({children}) => {
             setAuthenticated(true);
             navigate("/");
         }
-    }
+    };
 
     const get_register = async (username, password, cpassword, email, firstname, lastname) => {
         if (password !== cpassword) {
             alert("Passwords do not match");
-        }else{
-            try{
-                const success = await register(username, password, email, firstname, lastname)
+        } else {
+            try {
+                const success = await register(username, password, email, firstname, lastname);
                 console.log(success);
                 alert("Registration Successful");
-            }
-            catch(err){
+            } catch (err) {
                 alert("Registration Failed");
             }
         }
-    }
+    };
 
     useEffect(() => {
         get_authenticated();
-    }, [window.location.pathname]);
-    return(
-        <AuthContext.Provider value={{authenticated, loading, get_user, get_register}}>
+    }, [location.pathname]); // ✅ Runs whenever the route changes
+
+    return (
+        <AuthContext.Provider value={{ authenticated, loading, get_user, get_register }}>
             {children}
         </AuthContext.Provider>
-    )
-}
+    );
+};
 
 export const useAuth = () => useContext(AuthContext);

@@ -1,9 +1,7 @@
 import axios from 'axios';
 
-const isDevelopment = import.meta.env.MODE === 'development';
-const BASE_URL = isDevelopment ? import.meta.env.VITE_API_BASE_URL_LOCAL : import.meta.env.VITE_API_BASE_URL_DEPLOY;
-
-console.log("Using API Base URL:", BASE_URL);
+const isDevelopment = process.env.MODE === 'development';
+const BASE_URL = isDevelopment ? process.env.REACT_APP_API_BASE_URL_LOCAL : process.env.REACT_APP_API_BASE_URL_DEPLOY;
 
 
 const LOGIN_URL = `${BASE_URL}token/`;
